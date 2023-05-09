@@ -43,16 +43,23 @@ const io = require("socket.io");
                 console.log(error);
             }
         }
-        static async UpdateMovie(){
+        static async UpdateMovie(FilmID,FSK,Description,Titel,Img,Serienlink,Statistik){
+            try {
+                await db.query('UPDATE filme SET FSK=?,Description=?,Titel=?,Img=?,Serienlink=?,Statistik=? WHERE FilmID = ?',[FSK,Description,Titel,Img,Serienlink,Statistik,FilmID]);
+                console.log('Der Film mit der '+Titel+' wurde Erfolgreich erneuert');
+            }catch (error){
+                console.log('Fehler beim erneuern des Films');
+                console.log(error);
+            }
         }
-       /* static async DeleteMovie() {
+       static async DeleteMovie(FilmID) {
             try {
                 await db.query('DELETE FROM filme WHERE FilmID= ?',[FilmID]);
-                console.log('Der Film'+Filme.Titel+ 'wurde Erfolgreich gelöscht.');
+                console.log('Der Film mit der ID '+FilmID+' wurde Erfolgreich gelöscht.');
             }catch (error){
                 console.log('Film konnte nicht gelöscht werden');
             }
-        }*/
+        }
    }
 module.exports = filme;
 

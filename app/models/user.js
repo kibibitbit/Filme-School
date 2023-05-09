@@ -9,20 +9,19 @@ const db = require('../Controller/db');
             this.Passwort = Passwort;
             this.Username = Username;
         }
-        static async getalluser(){
-            try{
-                const rows = await db.query(`SELECT * FROM user`);
+        static async getAlluser() {
+            try {
+                const rows = await db.query('SELECT * FROM user');
                 const Users = [];
 
                 rows.forEach(row => {
-                    const user = new users(
-                        row.FilmID,
-                        row.FSK,
-                        row.Description,
-                        row.Titel,
-                        row.Img,
-                        row.Serienlink,
-                        row.Statistik
+                    const user = new User(
+                        row.ID,
+                        row.Vorname,
+                        row.Nachname,
+                        row.Mail,
+                        row.Passwort,
+                        row.Username
                     );
                     Users.push(user);
                 });
@@ -30,7 +29,7 @@ const db = require('../Controller/db');
             } catch(error) {
                 console.log('Fehler bei dem Abrufen der Daten: ', error);
             }
-            }catch(error){
-                console.error(error);
-            }
+        };
     }
+
+module.exports = User;

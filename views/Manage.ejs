@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/CSS/Default.css">
+    <title>Add a new film</title>
+</head>
+<body>
+<button id="home-button" type="submit"><a href="/">Home</a></button>
+<section>
+    <div id="form-container">
+        <form action="/delete" method="post">
+            <h1 class="form-h1">Delete</h1>
+            <div class="block">
+                <label for="FilmID">ID:</label>
+                <input type="number" name="FilmID">
+            </div>
+            <button class="button-grid" type="submit">Delete</button>
+        </form>
+        <form class="add-grid" action="/create" method="POST">
+            <h1 class="form-h1">Create</h1>
+            <div class="block">
+                <label for="FSK">FSK</label>
+                <select name="FSK">
+                    <% for (var i = 1; i <= 10; i++) { %>
+                        <option value="<%= i %>"><%= i %></option>
+                    <% } %>
+                </select>
+            </div>
+            <div class="block">
+                <label for="Description">Beschreibung:</label>
+                <input type="text" name="Description" >
+            </div>
+            <div class="block">
+                <label for="Img">Bild:</label>
+                <input type="url" name="Img" />
+            </div>
+            <div class="block">
+                <label for="Titel">Titel:</label>
+                <input type="text" name="Titel" />
+            </div>
+            <div class="block">
+                <label for="Serienlink">Serien Link:</label>
+                <input type="url" name="Serienlink">
+            </div>
+            <div class="block">
+                <label for="Statistik">Bewertung:</label>
+                <select name="Statistik">
+                    <% for (var j = 1; j <= 10; j++) { %>
+                        <option value="<%= j %>"><%= j %></option>
+                    <% } %>
+                </select>
+            </div>
+            <div class="block">
+                <button class="button-grid"  type="submit">Add</button>
+                <button class="button-grid"  type="reset">Reset</button>
+            </div>
+        </form>
+        <form action="/update" method="post">
+            <h1 class="form-h1">Update</h1>
+            <div class="block">
+                <label for="FilmID">ID:</label>
+                <input type="number" name="FilmID" required>
+            </div>
+            <div class="block">
+                <label for="FSK">FSK</label>
+                <select name="FSK" required>
+                    <option value="1">0</option>
+                    <option value="2">6</option>
+                    <option value="3">12</option>
+                    <option value="4">16</option>
+                    <option value="5">18</option>
+                </select>
+            </div>
+            <div class="block">
+                <label for="Description">Beschreibung:</label>
+                <input type="text" name="Description" required>
+            </div>
+            <div class="block">
+                <label for="Img">Bild:</label>
+                <input type="url" name="Img" required/>
+            </div>
+            <div class="block">
+                <label for="Titel">Titel:</label>
+                <input type="text" name="Titel" required/>
+            </div>
+            <div class="block">
+                <label for="Serienlink">Serien Link:</label>
+                <input type="url" name="Serienlink" required>
+            </div>
+            <div class="block">
+                <label for="Statistik">Bewertung:</label>
+                <select name="Statistik" required>
+                    <% for (var j = 1; j <= 10; j++) { %>
+                        <option value="<%= j %>"><%= j %></option>
+                    <% } %>
+                </select>
+            </div>
+            <div class="block">
+                <button class="button-grid" type="submit">Update</button>
+                <button class="button-grid"  type="reset">Reset</button>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>

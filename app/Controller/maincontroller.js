@@ -1,29 +1,31 @@
 "use strict"
-const Filme = require('../modules/Filme');
-const bodyParser = require("body-parser");
+const user = require('../models/user');
+const Filme = require('../models/Filme');
 const path = require("path");
-const PulbicRoutes = require('../routes/PublicRoutes');
-const PrivateRoutes = require('../routes/PrivateRoutes');
-const express = require('express');
-const app = express();
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.set('views', './views');
-app.set('view engine','ejs');
-app.use( express.static(path.join(__dirname,'app')));
-app.use( express.static(path.join(__dirname,'public')));
-async function add(req,res){
-    res.render('Add');
+const db = require('../Controller/db');
+async function Manage(req,res){
+    try {
+        res.render('Manage');
+    }catch (error){
+        console.log(error)
+    }
 }
 async function error(req,res){
-    res.render('Error');
+    try {
+        res.render('Error');
+    }catch (error){
+        console.log(error)
+    }
 }
 async function Filmsite(req,res){
-    res.render('Filmsite');
+    try {
+        res.render('Filmsite');
+    }catch (error){
+        console.log(error)
+    }
 }
 async function betweenslash(req,res){
-    db.query(`SELECT * FROM filme WHERE FilmID = ${req.url.replace('/','')}`)
+    db.query(`SELECT * FROM filme WHERE FilmID = ${req.url.replace('/','')} `)
         .then(results => {
             res.render('Filmsite',{filme:results});
         })
@@ -34,14 +36,13 @@ async function betweenslash(req,res){
 async function create(req,res){
     try {
         const {FSK, Description,Titel,Img,Serienlink,Statistik} = req.body;
-        await controller.create(FSK,Description,Titel,Img,Serienlink,Statistik);
+        await Filme.CreateNewMovie(FSK,Description,Titel,Img,Serienlink,Statistik)
         res.redirect('/');
-
     }catch (error){
         console.error(error)
     }
 }
-async function main(req,res){
+async function index(req,res){
     try {
         await Filme.getAllMovies().then(filme =>{
            res.render('Index',{filme});
@@ -51,29 +52,41 @@ async function main(req,res){
         res.status(500).send('Fehler beim Abrufen der Filme');
     }
 }
-
-/*exports.delete = async (req, res) => {
-    const FilmID = req.params.id;
+async function del(req,res){
     try {
+        const {FilmID} = req.body;
         await Filme.DeleteMovie(FilmID);
-        res.redirect('Index');
+        res.redirect('/');
     } catch (error) {
         console.error(error);
         console.log(`Error deleting film with ID ${FilmID}`);
     }
-}*/
-exports.create = async (req, res) => {
-    const {FSK,Description,Titel,Img,Serienlink,Statistik} = req.body;
-
+}
+async function update(req,res) {
     try {
-        await Filme.CreateNewMovie(FSK,Description,Titel,Img,Serienlink,Statistik);
+        const {FilmID, FSK, Description, Titel, Img, Serienlink, Statistik} = req.body;
+        await Filme.UpdateMovie(FilmID, FSK, Description, Titel, Img, Serienlink, Statistik);
         res.redirect('/');
-
     } catch (error) {
         console.error(error);
-        console.log('Error creating film');
+        console.log(`Error Updating the Film ${Titel}`);
+    }
+}
+async function register (req,res){
+   try {
+       res.render('register');
+   }catch (error){
+       console.log(error)
+   }
+}
+async function login (req,res){
+    try {
+        res.render('login');
+    }catch (error){
+        console.log(error)
     }
 }
 
-module.exports = {add,create,main,Filmsite,betweenslash,error}
 
+
+module.exports = {Manage,create,index,Filmsite,betweenslash,error,del,update,login,register};

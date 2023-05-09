@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="/CSS/Default.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Noto+Serif+JP:wght@700&family=Open+Sans&display=swap" rel="stylesheet">
+        <title><%=filme[0].Titel%></title>
+</head>
+<body>
+<a id="back" href="/">Home</a>
+<div class="film-box">
+    <div class="film-box-box">
+        <div class="film-title">
+            <h1><%= filme[0].Titel%></h1>
+        </div>
+        <div class="film-picture">
+            <img src="<%= filme[0].Img%>">
+        </div>
+    </div>
+    <div class="film-description">
+        <h2>Description: </h2><%= filme[0].Description%>
+        <h2>FSK: <%= filme[0].FSK%></h2>
+        <a class="film-link" href="<%= filme[0].Serienlink%>">Watch Anime</a>
+    </div>
+</div>
+</body>
+</html>

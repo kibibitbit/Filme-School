@@ -1,8 +1,10 @@
 "use strict"
-const user = require('../models/user');
 const Filme = require('../models/Filme');
 const path = require("path");
 const db = require('../Controller/db');
+const user = require("../models/user");
+const bcrypt = require("bcrypt");
+
 async function Manage(req,res){
     try {
         res.render('Manage');
@@ -25,7 +27,7 @@ async function Filmsite(req,res){
     }
 }
 async function betweenslash(req,res){
-    db.query(`SELECT * FROM filme WHERE FilmID = ${req.url.replace('/','')} `)
+    db.query('SELECT * FROM filme WHERE FilmID = ?', [req.url.replace('/', '')])
         .then(results => {
             res.render('Filmsite',{filme:results});
         })
@@ -72,16 +74,55 @@ async function update(req,res) {
         console.log(`Error Updating the Film ${Titel}`);
     }
 }
+async function createUser(req,res){
+    const {Username,mail,Passwort,passwordconfirm} = req.body;
+    try {
+        const mailExists = await user.Mailcheck(mail);
+        if (mailExists) {
+            return res.render('register', {
+                message: 'Mail already taken',
+            });
+        }
+        if(Passwort !== passwordconfirm){
+            return res.render('register',{
+                message: 'Password not match'
+            });
+        }
+        else{
+            let hashedpassword = await bcrypt.hash(Passwort,10)
+            await user.CreateNewUser('','',mail,hashedpassword,Username);
+            return res.render('login',{
+                message:'Successfully registered'
+            });
+        }
+
+    }catch (error){
+        console.log(error)
+    }
+}
+async function loginuser(req,res){
+    try {
+    }catch (error){
+        console.log(error)
+    }
+}
+
 async function register (req,res){
    try {
-       res.render('register');
+       const message = req.query.message|| '';
+           res.render('register',{
+               message:message
+           });
    }catch (error){
        console.log(error)
    }
 }
 async function login (req,res){
     try {
-        res.render('login');
+        const message = req.query.message|| '';
+        res.render('login',{
+            message:message
+        });
     }catch (error){
         console.log(error)
     }
@@ -89,4 +130,4 @@ async function login (req,res){
 
 
 
-module.exports = {Manage,create,index,Filmsite,betweenslash,error,del,update,login,register};
+module.exports = {Manage,create,index,Filmsite,betweenslash,error,del,update,login,register,createUser,loginuser};

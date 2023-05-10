@@ -1,9 +1,12 @@
 "use strict"
 const express = require('express');
 const app = express();
+const session = require('express-session');
+const flash = require('connect-flash');
 const path = require("path");
 const PublicRoutes = require('./app/routes/PublicRoutes');
 const PrivateRoutes = require('./app/routes/PrivateRoutes');
+
 
 app.set('views', './views');
 app.set('view engine','ejs');

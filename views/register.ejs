@@ -11,42 +11,49 @@
 </head>
 <body>
 <div class="container">
-    <div class="container-canvas">
-        <div class="register">
-            <h1>Register</h1>
+    <div class="container-container">
+        <div class="container-container-canvas">
+            <div class="register">
+                <h1>Register</h1>
+            </div>
+            <form action="/auth/register" method="post">
+                <div>
+                    <div>
+                        <label for="Username">Username:</label>
+                    </div>
+                    <input type="text" name="Username" required>
+                </div>
+                <div>
+                    <div>
+                        <label for="mail">email:</label>
+                    </div>
+                    <input type="email" name="mail" required/>
+                </div>
+                <div>
+                    <div>
+                        <label for="Passwort">password:</label>
+                    </div>
+                    <input type="password" name="Passwort" required/>
+                </div>
+                <div>
+                    <div>
+                        <label for="passwordconfirm">password confirm:</label>
+                    </div>
+                    <input type="password" name="passwordconfirm">
+                </div>
+                <div>
+                    <button type="submit">Regestrieren</button>
+                    <div id="account">
+                        Du hast bereits ein Account ?<a href="/login">LogIn</a>
+                    </div>
+                </div>
+            </form>
+            <%if(message){%>
+            <div class="massage-container">
+                <%= message%>
+            </div>
+            <%}%>
         </div>
-        <form action="/auth/register" method="post">
-            <div>
-                <div>
-                    <label for="name">name:</label>
-                </div>
-                <input type="text" name="Name" >
-            </div>
-            <div>
-                <div>
-                    <label for="email">email:</label>
-                </div>
-                <input type="text" name="Mail" />
-            </div>
-            <div>
-                <div>
-                    <label for="password">password:</label>
-                </div>
-                <input type="password" name="Passwort" />
-            </div>
-            <div>
-                <div>
-                    <label for="passwordconfirm">password confirm:</label>
-                </div>
-                <input type="password" name="passwordconfirm">
-            </div>
-            <div>
-                <button type="submit">Regestrieren</button>
-                <div id="account">
-                    Du hast bereits ein Account ?<a href="/login">LogIn</a>
-                </div>
-            </div>
-        </form>
     </div>
 </div>
 </body>
